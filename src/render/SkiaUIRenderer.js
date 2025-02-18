@@ -1,20 +1,45 @@
 const TAG = "SkiaUIRenderer";
 const Reconciler = require('react-reconciler');
 const {type} = require("@testing-library/user-event/dist/type");
+const {
+  DefaultEventPriority,
+} = require('react-reconciler/constants');
+const {convertStyles} = require("./StyleUtils");
+const {convertProps} = require("./PropsUtils");
 
 const HostConfig = {
   supportsMutation: true,
   createInstance(type, props, rootContainer, hostContext, internalHandle) {
-	console.log(TAG, "createInstance", type, props, rootContainer);
+	console.log(TAG, "createInstance", type, JSON.stringify(props), rootContainer);
+	if (type === "view") {
+	  let view = new global.SkiaUI.View();
+	  convertStyles(view, props.style)
+	  if (props.onClick) {
+		view.setOnClickListener((_view) => {
+		  props.onClick();
+		});
+	  }
+	  return view;
+	} else if (type === "page") {
+	  let page = new global.SkiaUI.Page();
+	  convertStyles(page, props.style)
+	  page.push(new global.SkiaUI.EnterExitInfo(global.SkiaUI.innerWidth, 0));
+	  return page;
+	} else if (type === "scroll") {
+	  let scrollView = new global.SkiaUI.ScrollView();
+	  convertStyles(scrollView, props.style);
+	  return scrollView;
+	}
   },
   createTextInstance(text, rootContainer, hostContext, internalHandle) {
 	console.log(TAG, "createTextInstance", type, rootContainer, hostContext);
   },
   appendInitialChild(parentInstance, child) {
-	console.log(TAG, "appendInitialChild", child);
+	console.log(TAG, "appendInitialChild", child.name, parentInstance.name);
+	parentInstance.addView(child);
   },
   finalizeInitialChildren(instance, type, props, rootContainer, hostContext) {
-	console.log(TAG, "finalizeInitialChildren", instance, props, rootContainer);
+	console.log(TAG, "finalizeInitialChildren", instance.name, JSON.stringify(props), rootContainer);
 	return false;
   },
   shouldSetTextContent(type, props) {
@@ -23,7 +48,7 @@ const HostConfig = {
   },
   getRootHostContext(rootContainer) {
 	console.log(TAG, "getRootHostContext", rootContainer);
-	return null;
+	return global.SkiaUI;
   },
   getChildHostContext(parentHostContext, type, rootContainer) {
 	console.log(TAG, "getChildHostContext", type, rootContainer);
@@ -48,22 +73,22 @@ const HostConfig = {
   supportsMicrotasks: false,
   isPrimaryRenderer: true,
   appendChild(parentInstance, child) {
-	console.log(TAG, "appendChild", child);
+	console.log(TAG, "appendChild", child.name);
   },
   appendChildToContainer(container, child) {
-	console.log(TAG, "appendChildToContainer", child);
+	console.log(TAG, "appendChildToContainer", container, child.name);
   },
   insertBefore(parentInstance, child, beforeChild) {
-	console.log(TAG, "insertBefore", child);
+	console.log(TAG, "insertBefore", child.name);
   },
   insertInContainerBefore(container, child, beforeChild) {
-	console.log(TAG, "insertInContainerBefore", child);
+	console.log(TAG, "insertInContainerBefore", child.name);
   },
   removeChild(parentInstance, child) {
-	console.log(TAG, "removeChild", child);
+	console.log(TAG, "removeChild", child.name);
   },
   removeChildFromContainer(container, child) {
-	console.log(TAG, "removeChildFromContainer", child);
+	console.log(TAG, "removeChildFromContainer", child.name);
   },
   resetTextContent(instance) {
 	console.log(TAG, "resetTextContent", instance);
@@ -93,7 +118,7 @@ const HostConfig = {
 	console.log(TAG, "clearContainer", container);
   },
   maySuspendCommit(type, props) {
-	console.log(TAG, "maySuspendCommit", type, props);
+	console.log(TAG, "maySuspendCommit", type, JSON.stringify(props));
   },
   preloadInstance(type, props) {
 	console.log(TAG, "preloadInstance", type, props);
@@ -106,6 +131,15 @@ const HostConfig = {
   },
   waitForCommitToBeReady() {
 	console.log(TAG, "waitForCommitToBeReady");
+  },
+  resolveUpdatePriority() {
+	return DefaultEventPriority;
+  },
+  getCurrentUpdatePriority() {
+	return DefaultEventPriority;
+  },
+  setCurrentUpdatePriority(priority) {
+
   }
 };
 
@@ -113,7 +147,7 @@ const SkiaUIRenderer = Reconciler(HostConfig);
 
 const RendererPublicAPI = {
   render(element, renderDom, callback) {
-	const container = SkiaUIRenderer.createContainer(renderDom, false);
+	const container = SkiaUIRenderer.createContainer(renderDom, "");
 	const parentComponent = null;
 	SkiaUIRenderer.updateContainer(
 		element,

@@ -6,7 +6,7 @@ import SkiaUIRenderer from './render/SkiaUIRenderer';
 import SkiaApp from "./SkiaApp";
 
 if (global.SkiaUI) {
-  SkiaUIRenderer.render(<SkiaApp/>, null);
+  SkiaUIRenderer.render(<SkiaApp/>);
 } else {
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
