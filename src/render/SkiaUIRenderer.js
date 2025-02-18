@@ -4,8 +4,8 @@ const {type} = require("@testing-library/user-event/dist/type");
 const {
   DefaultEventPriority,
 } = require('react-reconciler/constants');
-const {convertStyles} = require("./StyleUtils");
-const {convertProps} = require("./PropsUtils");
+const {convertStyles, comparePrevStylesAndNextStyles} = require("./StyleUtils");
+const {convertProps, convertLottieProps} = require("./PropsUtils");
 
 const HostConfig = {
   supportsMutation: true,
@@ -13,12 +13,8 @@ const HostConfig = {
 	console.log(TAG, "createInstance", type, JSON.stringify(props), rootContainer);
 	if (type === "view") {
 	  let view = new global.SkiaUI.View();
-	  convertStyles(view, props.style)
-	  if (props.onClick) {
-		view.setOnClickListener((_view) => {
-		  props.onClick();
-		});
-	  }
+	  convertStyles(view, props.style);
+	  convertProps(view, props);
 	  return view;
 	} else if (type === "page") {
 	  let page = new global.SkiaUI.Page();
@@ -29,6 +25,11 @@ const HostConfig = {
 	  let scrollView = new global.SkiaUI.ScrollView();
 	  convertStyles(scrollView, props.style);
 	  return scrollView;
+	} else if (type === "lottie") {
+	  let lottieView = new global.SkiaUI.LottieView();
+	  convertStyles(lottieView, props.style);
+	  convertLottieProps(lottieView, props);
+	  return lottieView;
 	}
   },
   createTextInstance(text, rootContainer, hostContext, internalHandle) {
@@ -65,10 +66,10 @@ const HostConfig = {
 
   },
   scheduleTimeout(fn, delay) {
-	global.SkiaUI.setTimeout(fn, delay);
+	setTimeout(fn, delay);
   },
   cancelTimeout(id) {
-	global.SkiaUI.clearTimeout(id);
+	clearTimeout(id);
   },
   supportsMicrotasks: false,
   isPrimaryRenderer: true,
@@ -100,7 +101,8 @@ const HostConfig = {
 	console.log(TAG, "commitMount", instance, type, props);
   },
   commitUpdate(instance, type, prevProps, nextProps, internalHandle) {
-	console.log(TAG, "commitUpdate", instance, type, prevProps, nextProps);
+	console.log(TAG, "commitUpdate", instance.name, type, JSON.stringify(prevProps), JSON.stringify(nextProps));
+	comparePrevStylesAndNextStyles(instance, prevProps.style, nextProps.style);
   },
   hideInstance(instance) {
 	console.log(TAG, "hideInstance", instance);
