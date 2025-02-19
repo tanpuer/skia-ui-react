@@ -6,9 +6,30 @@ export function convertProps(view, props) {
   }
 }
 
-export function convertLottieProps(lottie, props) {
+export function convertLottieProps(lottieView, props) {
   if (props.src) {
-	lottie.src = props.src;
+	lottieView.src = props.src;
   }
-  convertProps(lottie, props);
+  convertProps(lottieView, props);
+}
+
+export function convertVideoProps(videoView, props) {
+  if (props.src) {
+	videoView.src = props.src;
+  }
+  convertProps(videoView, props);
+}
+
+export function convertShaderProps(shaderView, props) {
+  if (props.path) {
+	shaderView.setShaderPath(props.path, props.textures || []);
+  }
+  convertProps(shaderView, props);
+}
+
+export function convertButtonProps(buttonView, props) {
+  if (props.text) {
+	buttonView.text = props.text;
+  }
+  convertProps(buttonView, props);
 }

@@ -4,33 +4,14 @@ const {type} = require("@testing-library/user-event/dist/type");
 const {
   DefaultEventPriority,
 } = require('react-reconciler/constants');
-const {convertStyles, comparePrevStylesAndNextStyles} = require("./StyleUtils");
-const {convertProps, convertLottieProps} = require("./PropsUtils");
+const {comparePrevStylesAndNextStyles} = require("./StyleUtils");
+const {createView} = require("./ViewFactory");
 
 const HostConfig = {
   supportsMutation: true,
   createInstance(type, props, rootContainer, hostContext, internalHandle) {
 	console.log(TAG, "createInstance", type, JSON.stringify(props), rootContainer);
-	if (type === "view") {
-	  let view = new global.SkiaUI.View();
-	  convertStyles(view, props.style);
-	  convertProps(view, props);
-	  return view;
-	} else if (type === "page") {
-	  let page = new global.SkiaUI.Page();
-	  convertStyles(page, props.style)
-	  page.push(new global.SkiaUI.EnterExitInfo(global.SkiaUI.innerWidth, 0));
-	  return page;
-	} else if (type === "scroll") {
-	  let scrollView = new global.SkiaUI.ScrollView();
-	  convertStyles(scrollView, props.style);
-	  return scrollView;
-	} else if (type === "lottie") {
-	  let lottieView = new global.SkiaUI.LottieView();
-	  convertStyles(lottieView, props.style);
-	  convertLottieProps(lottieView, props);
-	  return lottieView;
-	}
+	return createView(type, props);
   },
   createTextInstance(text, rootContainer, hostContext, internalHandle) {
 	console.log(TAG, "createTextInstance", type, rootContainer, hostContext);

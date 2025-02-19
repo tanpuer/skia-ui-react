@@ -11,6 +11,8 @@ export default class SkiaApp extends React.Component {
 	this.innerHeight = SkiaUI ? SkiaUI.innerHeight : 1080;
 	this.lottieRef = React.createRef();
 	this.lottieFlag = true;
+	this.shaderRef = React.createRef();
+	this.shaderFlag = true;
   }
 
   changeBg() {
@@ -30,11 +32,7 @@ export default class SkiaApp extends React.Component {
 	return (
 		<page style={{width: this.innerWidth, height: this.innerHeight}}>
 		  <scroll style={{
-			flex: 1,
-			flexDirection: 'column',
-			flexWrap: 'nowrap',
-			justifyContent: 'center',
-			alignItems: 'center'
+			flex: 1, flexDirection: 'column', flexWrap: 'nowrap', justifyContent: 'center', alignItems: 'center'
 		  }}>
 			<view
 				style={{width: 200, height: 200, backgroundColor: this.state.viewBg}}
@@ -53,6 +51,31 @@ export default class SkiaApp extends React.Component {
 					this.lottieRef.current.start();
 				  }
 				  this.lottieFlag = !this.lottieFlag;
+				}}
+			/>
+			<video
+				style={{width: 1080, height: 360 * 1080 / 640}}
+				src={"yiluxiangbei.mp4"}
+			/>
+			<shader
+				ref={this.shaderRef}
+				style={{width: 1080, height: 520}}
+				path={"raining.glsl"}
+				textures={["raining.png"]}
+				onClick={() => {
+				  if (this.shaderFlag) {
+					this.shaderRef.current.setShaderPath("sincos.glsl", []);
+				  } else {
+					this.shaderRef.current.setShaderPath("raining.glsl", ["raining.png"]);
+				  }
+				  this.shaderFlag = !this.shaderFlag;
+				}}
+			/>
+			<button
+				style={{width: 260, height: 100, textSize: 60, backgroundColor: "#ff0000"}}
+				text={"Button"}
+				onClick={() => {
+				  console.log("button is clicked!");
 				}}
 			/>
 		  </scroll>
