@@ -40,3 +40,24 @@ export function convertSVGProps(svgView, props) {
   }
   convertProps(svgView, props);
 }
+
+export function convertPageProps(page, props) {
+  if (props.onCreate) {
+	page.onCreate(props.onCreate);
+  }
+  if (props.onDestroy) {
+	page.onDestroy(props.onDestroy);
+  }
+  if (props.onShow) {
+	page.onShow(props.onShow);
+  }
+  if (props.onHide) {
+	page.onHide(props.onHide);
+  }
+}
+
+export function convertTextProps(textView, props) {
+  if (props.text) {
+	textView.text = props.text;
+  }
+}

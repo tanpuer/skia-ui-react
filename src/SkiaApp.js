@@ -30,10 +30,28 @@ export default class SkiaApp extends React.Component {
 
   render() {
 	return (
-		<page style={{width: this.innerWidth, height: this.innerHeight}}>
+		<page
+			style={{width: this.innerWidth, height: this.innerHeight}}
+			onCreate={() => {
+			  console.log("page onCreate");
+			}}
+			onDestroy={() => {
+			  console.log("page onDestroy");
+			}}
+			onShow={() => {
+			  console.log("page onShow");
+			}}
+			onHide={() => {
+			  console.log("page onHide");
+			}}
+		>
 		  <scroll style={{
 			flex: 1, flexDirection: 'column', flexWrap: 'nowrap', justifyContent: 'flex-start', alignItems: 'center'
 		  }}>
+			<text
+				style={{textColor: "#00ff00", textSize: 50}}
+				text={"React Demo:\nusing react-reconciler!"}
+			/>
 			<svg
 				style={{width: 300, height: 300}}
 				src={"react.svg"}

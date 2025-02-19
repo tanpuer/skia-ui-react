@@ -1,14 +1,14 @@
 import {convertStyles} from "./StyleUtils";
 import {
   convertButtonProps,
-  convertLottieProps,
+  convertLottieProps, convertPageProps,
   convertProps,
-  convertShaderProps, convertSVGProps,
+  convertShaderProps, convertSVGProps, convertTextProps,
   convertVideoProps
 } from "./PropsUtils";
 
 const {
-  View, ScrollView, LottieView, YUVVideoView, Page, EnterExitInfo, innerWidth, ShaderView, Button, SVGView
+  View, ScrollView, LottieView, YUVVideoView, Page, EnterExitInfo, innerWidth, ShaderView, Button, SVGView, TextView
 } = SkiaUI;
 
 export function createView(type, props) {
@@ -19,7 +19,8 @@ export function createView(type, props) {
 	return view;
   } else if (type === "page") {
 	let page = new Page();
-	convertStyles(page, props.style)
+	convertStyles(page, props.style);
+	convertPageProps(page, props);
 	page.push(new EnterExitInfo(innerWidth, 0));
 	return page;
   } else if (type === "scroll") {
@@ -51,5 +52,10 @@ export function createView(type, props) {
 	convertStyles(svgView, props.style);
 	convertSVGProps(svgView, props);
 	return svgView;
+  } else if (type === "text") {
+	let textView = new TextView();
+	convertStyles(textView, props.style);
+	convertTextProps(textView, props);
+	return textView;
   }
 }
