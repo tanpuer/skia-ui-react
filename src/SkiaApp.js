@@ -34,6 +34,10 @@ export default class SkiaApp extends React.Component {
 		  <scroll style={{
 			flex: 1, flexDirection: 'column', flexWrap: 'nowrap', justifyContent: 'center', alignItems: 'center'
 		  }}>
+			<svg
+				style={{width: 400, height: 400}}
+				src={"react.svg"}
+			/>
 			<view
 				style={{width: 200, height: 200, backgroundColor: this.state.viewBg}}
 				onClick={() => {

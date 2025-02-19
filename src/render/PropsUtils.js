@@ -33,3 +33,10 @@ export function convertButtonProps(buttonView, props) {
   }
   convertProps(buttonView, props);
 }
+
+export function convertSVGProps(svgView, props) {
+  if (props.src) {
+	svgView.src = props.src;
+  }
+  convertProps(svgView, props);
+}

@@ -3,12 +3,12 @@ import {
   convertButtonProps,
   convertLottieProps,
   convertProps,
-  convertShaderProps,
+  convertShaderProps, convertSVGProps,
   convertVideoProps
 } from "./PropsUtils";
 
 const {
-  View, ScrollView, LottieView, YUVVideoView, Page, EnterExitInfo, innerWidth, ShaderView, Button
+  View, ScrollView, LottieView, YUVVideoView, Page, EnterExitInfo, innerWidth, ShaderView, Button, SVGView
 } = SkiaUI;
 
 export function createView(type, props) {
@@ -46,5 +46,10 @@ export function createView(type, props) {
 	convertStyles(button, props.style);
 	convertButtonProps(button, props);
 	return button;
+  } else if (type === "svg") {
+	let svgView = new SVGView();
+	convertStyles(svgView, props.style);
+	convertSVGProps(svgView, props);
+	return svgView;
   }
 }
