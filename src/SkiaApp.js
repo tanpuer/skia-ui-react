@@ -32,10 +32,10 @@ export default class SkiaApp extends React.Component {
 	return (
 		<page style={{width: this.innerWidth, height: this.innerHeight}}>
 		  <scroll style={{
-			flex: 1, flexDirection: 'column', flexWrap: 'nowrap', justifyContent: 'center', alignItems: 'center'
+			flex: 1, flexDirection: 'column', flexWrap: 'nowrap', justifyContent: 'flex-start', alignItems: 'center'
 		  }}>
 			<svg
-				style={{width: 400, height: 400}}
+				style={{width: 300, height: 300}}
 				src={"react.svg"}
 			/>
 			<view
