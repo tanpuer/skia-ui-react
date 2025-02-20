@@ -62,6 +62,15 @@ export default class SkiaApp extends React.Component {
 				  this.changeBg();
 				}}
 			/>
+			<button
+				style={{width: 500, height: 100, textSize: 50, backgroundColor: "#00ff00"}}
+				text={"go to music page"}
+				onClick={() => {
+				  console.log("go to music page!");
+				  console.log(this.props.navigate);
+				  this.props.navigate('/music');
+				}}
+			/>
 			<lottie
 				style={{width: 375, height: 420}}
 				src={"WorkspacePlanet.json"}
@@ -91,13 +100,6 @@ export default class SkiaApp extends React.Component {
 					this.shaderRef.current.setShaderPath("raining.glsl", ["raining.png"]);
 				  }
 				  this.shaderFlag = !this.shaderFlag;
-				}}
-			/>
-			<button
-				style={{width: 260, height: 100, textSize: 60, backgroundColor: "#ff0000"}}
-				text={"Button"}
-				onClick={() => {
-				  console.log("button is clicked!");
 				}}
 			/>
 		  </scroll>

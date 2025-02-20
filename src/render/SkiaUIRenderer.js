@@ -1,6 +1,5 @@
 const TAG = "SkiaUIRenderer";
 const Reconciler = require('react-reconciler');
-const {type} = require("@testing-library/user-event/dist/type");
 const {
   DefaultEventPriority,
 } = require('react-reconciler/constants');
