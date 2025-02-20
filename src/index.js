@@ -33,8 +33,8 @@ function WrapperComponent({component: Component}) {
   );
 }
 
-// SkiaUIRenderer.render(<SkiaApp/>);
+SkiaUIRenderer.render(<SkiaApp/>);
 
-SkiaUIRenderer.render(
-	<RouterProvider router={router}/>
-);
+// SkiaUIRenderer.render(
+// 	<RouterProvider router={router}/>
+// );

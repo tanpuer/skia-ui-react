@@ -1,11 +1,21 @@
 import React from "react";
+import {TAG} from "./const";
 
 export default class MusicApp extends React.Component {
 
   constructor(props) {
 	super(props);
+	console.log(TAG, "prop is:", JSON.stringify(props));
 	this.innerWidth = SkiaUI ? SkiaUI.innerWidth : 1920;
 	this.innerHeight = SkiaUI ? SkiaUI.innerHeight : 1080;
+  }
+
+  componentDidMount() {
+	console.log(TAG, "componentDidMount");
+  }
+
+  componentWillUnmount() {
+	console.log(TAG, "componentWillUnmount");
   }
 
   render() {

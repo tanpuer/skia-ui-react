@@ -8,7 +8,7 @@ import {
 } from "./PropsUtils";
 
 const {
-  View, ScrollView, LottieView, YUVVideoView, Page, EnterExitInfo, innerWidth, ShaderView, Button, SVGView, TextView
+  View, ScrollView, LottieView, VideoView, Page, EnterExitInfo, innerWidth, ShaderView, Button, SVGView, TextView
 } = SkiaUI;
 
 export function createView(type, props) {
@@ -33,7 +33,7 @@ export function createView(type, props) {
 	convertLottieProps(lottieView, props);
 	return lottieView;
   } else if (type === "video") {
-	let videoView = new YUVVideoView();
+	let videoView = new VideoView();
 	convertStyles(videoView, props.style);
 	convertVideoProps(videoView, props);
 	return videoView;

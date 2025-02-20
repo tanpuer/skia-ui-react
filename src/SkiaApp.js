@@ -1,4 +1,6 @@
 import React from 'react';
+import SkiaUIRenderer from "./render/SkiaUIRenderer";
+import MusicApp from "./MusicApp";
 
 export default class SkiaApp extends React.Component {
 
@@ -63,12 +65,13 @@ export default class SkiaApp extends React.Component {
 				}}
 			/>
 			<button
-				style={{width: 500, height: 100, textSize: 50, backgroundColor: "#00ff00"}}
+				style={{width: 500, height: 100, textSize: 50, backgroundColor: "#00ff00", marginTop: 50}}
 				text={"go to music page"}
 				onClick={() => {
 				  console.log("go to music page!");
 				  console.log(this.props.navigate);
-				  this.props.navigate('/music');
+				  // this.props.navigate('/music');
+				  SkiaUIRenderer.render(<MusicApp props={{from: "app"}}/>);
 				}}
 			/>
 			<lottie
@@ -90,7 +93,7 @@ export default class SkiaApp extends React.Component {
 			/>
 			<shader
 				ref={this.shaderRef}
-				style={{width: 1080, height: 520}}
+				style={{width: 1080, height: 520, marginTop: 50, marginBottom: 50}}
 				path={"raining.glsl"}
 				textures={["raining.png"]}
 				onClick={() => {
