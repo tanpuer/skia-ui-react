@@ -1,6 +1,8 @@
 import React from "react";
 import {TAG} from "./const";
 
+const {LinearAnimator} = SkiaUI;
+
 export default class MusicApp extends React.Component {
 
   constructor(props) {
@@ -8,10 +10,24 @@ export default class MusicApp extends React.Component {
 	console.log(TAG, "prop is:", JSON.stringify(props));
 	this.innerWidth = SkiaUI ? SkiaUI.innerWidth : 1920;
 	this.innerHeight = SkiaUI ? SkiaUI.innerHeight : 1080;
+	this.svgRef = React.createRef();
+	this.svgRotateAnimator = undefined;
+	this.state = {
+	  svgRotateZ: 0
+	}
   }
 
   componentDidMount() {
 	console.log(TAG, "componentDidMount");
+	if (!this.svgRotateAnimator && this.svgRef.current != null) {
+	  this.svgRotateAnimator = new LinearAnimator(this.svgRef.current, 0.0, 360.0);
+	  this.svgRotateAnimator.duration = 5000;
+	  this.svgRotateAnimator.loop = -1;
+	  this.svgRotateAnimator.setUpdateListener((value) => {
+		this.setState({svgRotateZ: value});
+	  });
+	  this.svgRotateAnimator.start();
+	}
   }
 
   componentWillUnmount() {
@@ -19,6 +35,7 @@ export default class MusicApp extends React.Component {
   }
 
   render() {
+	console.log(TAG, "MusicApp render");
 	return (
 		<page
 			style={{width: this.innerWidth, height: this.innerHeight}}
@@ -43,7 +60,8 @@ export default class MusicApp extends React.Component {
 				text={"Music App developed by React"}
 			/>
 			<svg
-				style={{width: 300, height: 300}}
+				ref={this.svgRef}
+				style={{width: 300, height: 300, rotateZ: this.state.svgRotateZ}}
 				src={"react.svg"}
 			/>
 		  </scroll>

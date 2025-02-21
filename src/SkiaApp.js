@@ -1,6 +1,7 @@
 import React from 'react';
 import SkiaUIRenderer from "./render/SkiaUIRenderer";
 import MusicApp from "./MusicApp";
+import {TAG} from "./const";
 
 export default class SkiaApp extends React.Component {
 
@@ -31,6 +32,7 @@ export default class SkiaApp extends React.Component {
   }
 
   render() {
+	console.log(TAG, "SkiaApp render");
 	return (
 		<page
 			style={{width: this.innerWidth, height: this.innerHeight}}

@@ -122,6 +122,9 @@ const HostConfig = {
   },
   setCurrentUpdatePriority(priority) {
 
+  },
+  detachDeletedInstance(alternate) {
+	console.log(TAG, "detachDeletedInstance");
   }
 };
 
