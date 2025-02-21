@@ -10,7 +10,11 @@ const HostConfig = {
   supportsMutation: true,
   createInstance(type, props, rootContainer, hostContext, internalHandle) {
 	console.log(TAG, "createInstance", type, JSON.stringify(props), rootContainer);
-	return createView(type, props);
+	const instance = createView(type, props);
+	if (type === "page") {
+	  pageStack.push(instance);
+	}
+	return instance;
   },
   createTextInstance(text, rootContainer, hostContext, internalHandle) {
 	console.log(TAG, "createTextInstance", type, rootContainer, hostContext);
@@ -130,16 +134,40 @@ const HostConfig = {
 
 const SkiaUIRenderer = Reconciler(HostConfig);
 
+var ROOT_INDEX = 0;
+
+const containerStack = [];
+const pageStack = []
+
 const RendererPublicAPI = {
-  render(element, renderDom, callback) {
-	const container = SkiaUIRenderer.createContainer(renderDom, "");
+  render(element) {
+	const rootElement = ROOT_INDEX++;
+	console.log("SkiaReactApp", "render", rootElement);
+	const container = SkiaUIRenderer.createContainer(rootElement, rootElement);
+	containerStack.push(container);
 	const parentComponent = null;
 	SkiaUIRenderer.updateContainer(
 		element,
 		container,
 		parentComponent,
-		callback
+		null
 	);
+  },
+  pop() {
+	const container = containerStack.pop();
+	console.log("SkiaReactApp", "pop", container);
+	if (container) {
+	  SkiaUIRenderer.updateContainer(
+		  null,
+		  container,
+		  null,
+		  null
+	  );
+	}
+	const page = pageStack.pop();
+	if (page) {
+	  page.pop(new SkiaUI.EnterExitInfo(0, SkiaUI.innerWidth));
+	}
   }
 };
 

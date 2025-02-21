@@ -1,5 +1,6 @@
 import React from "react";
 import {TAG} from "./const";
+import SkiaUIRenderer from "./render/SkiaUIRenderer";
 
 const {LinearAnimator} = SkiaUI;
 
@@ -35,7 +36,7 @@ export default class MusicApp extends React.Component {
   }
 
   render() {
-	console.log(TAG, "MusicApp render");
+	// console.log(TAG, "MusicApp render");
 	return (
 		<page
 			style={{width: this.innerWidth, height: this.innerHeight}}
@@ -63,6 +64,14 @@ export default class MusicApp extends React.Component {
 				ref={this.svgRef}
 				style={{width: 300, height: 300, rotateZ: this.state.svgRotateZ}}
 				src={"react.svg"}
+			/>
+			<button
+				style={{width: 260, height: 100, textSize: 50, backgroundColor: "#00ff00", marginTop: 50}}
+				text={"go back"}
+				onClick={() => {
+				  console.log("go back!");
+				  SkiaUIRenderer.pop();
+				}}
 			/>
 		  </scroll>
 		</page>
