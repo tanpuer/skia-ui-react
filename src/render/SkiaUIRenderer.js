@@ -168,7 +168,26 @@ const RendererPublicAPI = {
 	if (page) {
 	  page.pop(new SkiaUI.EnterExitInfo(0, SkiaUI.innerWidth));
 	}
+  },
+  setBackPressedCallback() {
+	SkiaUI.setBackPressedCallback(() => {
+	  if (containerStack.length >= 2) {
+		const container = containerStack.pop();
+		console.log("SkiaReactApp", "backPressed", container);
+		if (container) {
+		  SkiaUIRenderer.updateContainer(
+			  null,
+			  container,
+			  null,
+			  null
+		  );
+		}
+		pageStack.pop();
+	  }
+	});
   }
 };
+
+RendererPublicAPI.setBackPressedCallback();
 
 module.exports = RendererPublicAPI;
