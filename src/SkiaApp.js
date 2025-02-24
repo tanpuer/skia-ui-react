@@ -18,21 +18,7 @@ export default class SkiaApp extends React.Component {
 	this.shaderFlag = true;
   }
 
-  changeBg() {
-	console.log("changeBg");
-	const red = Math.floor(Math.random() * 256);
-	const green = Math.floor(Math.random() * 256);
-	const blue = Math.floor(Math.random() * 256);
-	const redHex = (red < 16 ? '0' : '') + red.toString(16);
-	const greenHex = (green < 16 ? '0' : '') + green.toString(16);
-	const blueHex = (blue < 16 ? '0' : '') + blue.toString(16);
-	this.setState({
-	  viewBg: `#${redHex}${greenHex}${blueHex}`
-	});
-  }
-
   render() {
-	console.log(TAG, "SkiaApp render");
 	return (
 		<page
 			style={{width: this.innerWidth, height: this.innerHeight}}
@@ -70,9 +56,7 @@ export default class SkiaApp extends React.Component {
 				style={{width: 500, height: 100, textSize: 50, backgroundColor: "#00ff00", marginTop: 50}}
 				text={"go to music page"}
 				onClick={() => {
-				  console.log("go to music page!");
-				  console.log(this.props.navigate);
-				  // this.props.navigate('/music');
+				  console.log(TAG, "go to music page!");
 				  SkiaUIRenderer.render(<MusicApp props={{from: "app"}}/>);
 				}}
 			/>
@@ -90,12 +74,12 @@ export default class SkiaApp extends React.Component {
 				}}
 			/>
 			<video
-				style={{width: 1080, height: 360 * 1080 / 640}}
+				style={{width: this.innerWidth, height: 360 * this.innerWidth / 640}}
 				src={"yiluxiangbei.mp4"}
 			/>
 			<shader
 				ref={this.shaderRef}
-				style={{width: 1080, height: 520, marginTop: 50, marginBottom: 50}}
+				style={{width: this.innerWidth, height: 520, marginTop: 50, marginBottom: 50}}
 				path={"raining.glsl"}
 				textures={["raining.png"]}
 				onClick={() => {
@@ -110,5 +94,18 @@ export default class SkiaApp extends React.Component {
 		  </scroll>
 		</page>
 	);
+  }
+
+  changeBg() {
+	console.log("changeBg");
+	const red = Math.floor(Math.random() * 256);
+	const green = Math.floor(Math.random() * 256);
+	const blue = Math.floor(Math.random() * 256);
+	const redHex = (red < 16 ? '0' : '') + red.toString(16);
+	const greenHex = (green < 16 ? '0' : '') + green.toString(16);
+	const blueHex = (blue < 16 ? '0' : '') + blue.toString(16);
+	this.setState({
+	  viewBg: `#${redHex}${greenHex}${blueHex}`
+	});
   }
 }

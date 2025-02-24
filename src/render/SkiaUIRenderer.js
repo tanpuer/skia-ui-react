@@ -1,10 +1,11 @@
-const TAG = "SkiaUIRenderer";
+const {TAG} = require("./const");
 const Reconciler = require('react-reconciler');
 const {
   DefaultEventPriority,
 } = require('react-reconciler/constants');
 const {comparePrevStylesAndNextStyles} = require("./StyleUtils");
 const {createView} = require("./ViewFactory");
+const {comparePrePropsAndNextProps} = require("./PropsUtils");
 
 const HostConfig = {
   supportsMutation: true,
@@ -85,8 +86,9 @@ const HostConfig = {
 	console.log(TAG, "commitMount", instance, type, props);
   },
   commitUpdate(instance, type, prevProps, nextProps, internalHandle) {
-	console.log(TAG, "commitUpdate", instance.name, type, JSON.stringify(prevProps), JSON.stringify(nextProps));
-	comparePrevStylesAndNextStyles(instance, prevProps.style, nextProps.style);
+	// console.log(TAG, "commitUpdate", instance.name, type, JSON.stringify(prevProps), JSON.stringify(nextProps));
+	comparePrevStylesAndNextStyles(instance, type, prevProps.style, nextProps.style);
+	comparePrePropsAndNextProps(instance, type, prevProps, nextProps);
   },
   hideInstance(instance) {
 	console.log(TAG, "hideInstance", instance);

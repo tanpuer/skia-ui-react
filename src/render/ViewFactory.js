@@ -1,6 +1,6 @@
 import {convertStyles} from "./StyleUtils";
 import {
-  convertButtonProps,
+  convertButtonProps, convertImageProps,
   convertLottieProps, convertPageProps,
   convertProps,
   convertShaderProps, convertSVGProps, convertTextProps,
@@ -8,7 +8,8 @@ import {
 } from "./PropsUtils";
 
 const {
-  View, ScrollView, LottieView, VideoView, Page, EnterExitInfo, innerWidth, ShaderView, Button, SVGView, TextView
+  View, ScrollView, LottieView, VideoView, Page, EnterExitInfo, innerWidth, ShaderView, Button, SVGView, TextView, FlexboxLayout,
+  ImageView,
 } = SkiaUI;
 
 export function createView(type, props) {
@@ -57,5 +58,14 @@ export function createView(type, props) {
 	convertStyles(textView, props.style);
 	convertTextProps(textView, props);
 	return textView;
+  } else if (type === "flexbox") {
+	let flexboxLayout = new FlexboxLayout();
+	convertStyles(flexboxLayout, props.style);
+	return flexboxLayout;
+  } else if (type === "img") {
+	let imageView = new ImageView();
+	convertStyles(imageView, props.style);
+	convertImageProps(imageView, props);
+	return imageView;
   }
 }
