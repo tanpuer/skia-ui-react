@@ -7,6 +7,6 @@ use **react-reconciler** to create custom react-renderer for SkiaUI.
 2. npm run build.
 3. evaluate js in SkiaUI2 project.
 
-![image](https://github.com/tanpuer/skia-ui-react/blob/main/app/example1.png)
-![image](https://github.com/tanpuer/skia-ui-react/blob/main/app/example2.png)
-![image](https://github.com/tanpuer/skia-ui-react/blob/main/app/example3.png)
+![image](https://github.com/tanpuer/skia-ui-react/blob/main/example1.jpg)
+![image](https://github.com/tanpuer/skia-ui-react/blob/main/example2.jpg)
+![image](https://github.com/tanpuer/skia-ui-react/blob/main/example3.jpg)
