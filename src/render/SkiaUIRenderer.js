@@ -71,6 +71,7 @@ const HostConfig = {
 	console.log(TAG, "insertInContainerBefore", child.name);
   },
   removeChild(parentInstance, child) {
+	parentInstance.removeChild(child);
 	console.log(TAG, "removeChild", child.name);
   },
   removeChildFromContainer(container, child) {
