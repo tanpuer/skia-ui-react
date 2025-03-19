@@ -74,10 +74,28 @@ export function convertImageProps(imageView, props) {
   convertProps(imageView, props);
 }
 
+export function convertProgressProps(progressView, props) {
+  if (props.barColor) {
+	progressView.barColor = props.barColor;
+  }
+  if (props.barType) {
+	progressView.barType = props.barType;
+  }
+  if (props.progress) {
+	progressView.progress = props.progress;
+  }
+  if (props.onProgress) {
+	progressView.setProgressCallback && progressView.setProgressCallback((progress, finished) => {
+	  props.onProgress(progress, finished);
+	});
+  }
+  convertProps(progressView, props);
+}
+
 export function comparePrePropsAndNextProps(view, type, prevProps, nextProps) {
   Object.keys(prevProps).forEach(key => {
 	if (key !== "style" && nextProps[key] !== prevProps[key]) {
-	  console.log(TAG, "commitUpdate-prop", type, key, nextProps[key]);
+	  // console.log(TAG, "commitUpdate-prop", type, key, nextProps[key]);
 	  updateViewProp(view, type, key, prevProps, nextProps);
 	}
   });
@@ -109,6 +127,12 @@ function updateViewProp(view, type, key, prevProps, nextProps) {
   } else if (type === "flexbox") {
 
   } else if (type === "img") {
-
+	if (key === "src") {
+	  view.src = nextProps[key];
+	}
+  } else if (type === "progress") {
+	if (key === "progress") {
+	  view.progress = nextProps[key];
+	}
   }
 }

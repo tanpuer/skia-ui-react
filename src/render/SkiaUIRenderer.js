@@ -29,15 +29,15 @@ const HostConfig = {
 	return false;
   },
   shouldSetTextContent(type, props) {
-	console.log(TAG, "shouldSetTextContent", type, props);
+	// console.log(TAG, "shouldSetTextContent", type, props);
 	return false;
   },
   getRootHostContext(rootContainer) {
-	console.log(TAG, "getRootHostContext", rootContainer);
+	// console.log(TAG, "getRootHostContext", rootContainer);
 	return global.SkiaUI;
   },
   getChildHostContext(parentHostContext, type, rootContainer) {
-	console.log(TAG, "getChildHostContext", type, rootContainer);
+	// console.log(TAG, "getChildHostContext", type, rootContainer);
 	return parentHostContext;
   },
   getPublicInstance(instance) {
@@ -107,7 +107,7 @@ const HostConfig = {
 	console.log(TAG, "clearContainer", container);
   },
   maySuspendCommit(type, props) {
-	console.log(TAG, "maySuspendCommit", type, JSON.stringify(props));
+	// console.log(TAG, "maySuspendCommit", type);
   },
   preloadInstance(type, props) {
 	console.log(TAG, "preloadInstance", type, props);
@@ -131,7 +131,7 @@ const HostConfig = {
 
   },
   detachDeletedInstance(alternate) {
-	console.log(TAG, "detachDeletedInstance");
+	// console.log(TAG, "detachDeletedInstance");
   }
 };
 

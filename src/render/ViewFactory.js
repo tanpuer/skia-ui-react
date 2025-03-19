@@ -1,7 +1,7 @@
 import {convertStyles} from "./StyleUtils";
 import {
   convertButtonProps, convertImageProps,
-  convertLottieProps, convertPageProps,
+  convertLottieProps, convertPageProps, convertProgressProps,
   convertProps,
   convertShaderProps, convertSVGProps, convertTextProps,
   convertVideoProps
@@ -9,7 +9,7 @@ import {
 
 const {
   View, ScrollView, LottieView, VideoView, Page, EnterExitInfo, innerWidth, ShaderView, Button, SVGView, TextView, FlexboxLayout,
-  ImageView,
+  ImageView, ProgressBar
 } = SkiaUI;
 
 export function createView(type, props) {
@@ -67,5 +67,10 @@ export function createView(type, props) {
 	convertStyles(imageView, props.style);
 	convertImageProps(imageView, props);
 	return imageView;
+  } else if (type === "progress") {
+	let progressBar = new ProgressBar();
+	convertStyles(progressBar, props.style);
+	convertProgressProps(progressBar, props);
+	return progressBar;
   }
 }
