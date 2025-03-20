@@ -20,7 +20,7 @@ export default class MusicApp extends React.Component {
 	this.updateFrame = requestAnimationFrame(() => {
 	  this.calculate();
 	})
-	this.audiPlayer = new SkiaUI.AudioPlayer("feng.mp4");
+	this.audioPlayer = new SkiaUI.AudioPlayer("feng.mp4");
 	this.scrollRef = React.createRef();
   }
 
@@ -31,8 +31,8 @@ export default class MusicApp extends React.Component {
   componentWillUnmount() {
 	console.log(TAG, "componentWillUnmount");
 	cancelAnimationFrame(this.updateFrame);
-	this.audiPlayer.release();
-	this.audiPlayer = null;
+	this.audioPlayer.release();
+	this.audioPlayer = null;
   }
 
   render() {
@@ -49,14 +49,14 @@ export default class MusicApp extends React.Component {
 			}}
 			onShow={() => {
 			  console.log("MusicApp onShow");
-			  if (this.audiPlayer) {
-				this.audiPlayer.start();
+			  if (this.audioPlayer) {
+				this.audioPlayer.start();
 			  }
 			}}
 			onHide={() => {
 			  console.log("MusicApp onHide");
-			  if (this.audiPlayer) {
-				this.audiPlayer.pause();
+			  if (this.audioPlayer) {
+				this.audioPlayer.pause();
 			  }
 			}}
 		>
@@ -66,7 +66,7 @@ export default class MusicApp extends React.Component {
 					lyricIndex={this.state.index}
 					percent={this.state.percent}
 					progress={this.state.progress}
-					audiPlayer={this.audiPlayer}
+					audioPlayer={this.audioPlayer}
 					lyric={this.lyric}
 					onScrollRef={(ref) => {
 					  this.scrollRef = ref;
@@ -77,7 +77,7 @@ export default class MusicApp extends React.Component {
 					lyricIndex={this.state.index}
 					percent={this.state.percent}
 					progress={this.state.progress}
-					audiPlayer={this.audiPlayer}
+					audioPlayer={this.audioPlayer}
 					lyric={this.lyric}
 					onScrollRef={(ref) => {
 					  this.scrollRef = ref;
@@ -89,10 +89,10 @@ export default class MusicApp extends React.Component {
   }
 
   calculate() {
-	if (this.audiPlayer == null) {
+	if (this.audioPlayer == null) {
 	  return;
 	}
-	let duration = this.audiPlayer.getCurrentPosition();
+	let duration = this.audioPlayer.getCurrentPosition();
 	let start = 0;
 	let end = 0;
 	let index = -1;
@@ -140,7 +140,7 @@ export default class MusicApp extends React.Component {
 	  this.scrollRef.current.scrollTo(diff);
 	}
 	let progress = 0.0;
-	let totalDuration = this.audiPlayer.getDuration();
+	let totalDuration = this.audioPlayer.getDuration();
 	if (totalDuration > 0) {
 	  progress = duration * 100 / totalDuration;
 	}

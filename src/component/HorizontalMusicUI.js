@@ -70,6 +70,15 @@ export default class HorizontalMusicUI extends React.Component {
 			alignItems: 'center',
 			backgroundColor: "#ffffff00"
 		  }}>
+			<img
+				style={{
+				  width: 340,
+				  height: 92,
+				  objectFill: "cover",
+				  backgroundColor: "#ffffff00",
+				}}
+				src={"music/logo.png"}
+			/>
 			<text
 				style={{textColor: "#00ff00", textSize: 50, backgroundColor: "#ffffff00"}}
 				text={"Music App developed by React"}
