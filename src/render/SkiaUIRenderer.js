@@ -59,20 +59,22 @@ const HostConfig = {
   supportsMicrotasks: false,
   isPrimaryRenderer: true,
   appendChild(parentInstance, child) {
-	console.log(TAG, "appendChild", child.name);
+	console.log(TAG, "appendChild", child.name, parentInstance.name);
+	parentInstance.addView(child);
   },
   appendChildToContainer(container, child) {
 	console.log(TAG, "appendChildToContainer", container, child.name);
   },
   insertBefore(parentInstance, child, beforeChild) {
 	console.log(TAG, "insertBefore", child.name);
+	parentInstance.addViewBefore(child, beforeChild);
   },
   insertInContainerBefore(container, child, beforeChild) {
 	console.log(TAG, "insertInContainerBefore", child.name);
   },
   removeChild(parentInstance, child) {
-	parentInstance.removeChild(child);
 	console.log(TAG, "removeChild", child.name);
+	parentInstance.removeView(child);
   },
   removeChildFromContainer(container, child) {
 	console.log(TAG, "removeChildFromContainer", child.name);

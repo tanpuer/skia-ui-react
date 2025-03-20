@@ -8,7 +8,8 @@ export default class SkiaApp extends React.Component {
   constructor(props) {
 	super(props);
 	this.state = {
-	  viewBg: "#ff0000"
+	  viewBg: "#ff0000",
+	  flag: false
 	}
 	this.innerWidth = SkiaUI ? SkiaUI.innerWidth : 1920;
 	this.innerHeight = SkiaUI ? SkiaUI.innerHeight : 1080;
@@ -50,8 +51,18 @@ export default class SkiaApp extends React.Component {
 				style={{width: 200, height: 200, backgroundColor: this.state.viewBg}}
 				onClick={() => {
 				  this.changeBg();
+				  this.setState({
+					flag: !this.state.flag
+				  })
 				}}
 			/>
+			{
+			  this.state.flag ? <view style={{width: 200, height: 200, backgroundColor: "#ff0000", marginTop: 50}}/> :
+				  <text
+					  style={{textColor: "#00ff00", textSize: 50, backgroundColor: "#ffffff00"}}
+					  text={"test"}
+				  />
+			}
 			<button
 				style={{width: 500, height: 100, textSize: 50, backgroundColor: "#00ff00", marginTop: 50}}
 				text={"go to music page"}
